@@ -1,0 +1,14 @@
+-- Actual vs estimated delivery time
+SELECT
+  o.order_id,
+  DATE_DIFF(o.order_delivered_customer_date, o.order_estimated_delivery_date, DAY) AS delivery_delay,
+  CASE
+    WHEN DATE_DIFF(o.order_delivered_customer_date, o.order_estimated_delivery_date, DAY) > 0 THEN 'Late'
+    WHEN DATE_DIFF(o.order_delivered_customer_date, o.order_estimated_delivery_date, DAY) < 0 THEN 'Early'
+    ELSE 'On Time'
+  END AS delivery_status
+FROM
+  `project.dataset.orders` o
+WHERE
+  o.order_delivered_customer_date IS NOT NULL
+  AND o.order_estimated_delivery_date IS NOT NULL;
