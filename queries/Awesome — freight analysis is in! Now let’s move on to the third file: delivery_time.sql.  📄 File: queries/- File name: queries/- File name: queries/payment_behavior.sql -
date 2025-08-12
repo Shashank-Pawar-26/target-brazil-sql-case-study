@@ -1,0 +1,12 @@
+-- Payment behavior analysis
+SELECT
+  payment_type,
+  COUNT(order_id) AS total_orders,
+  ROUND(AVG(payment_value), 2) AS avg_payment_value,
+  SUM(payment_value) AS total_revenue
+FROM
+  `project.dataset.payments`
+GROUP BY
+  payment_type
+ORDER BY
+  total_revenue DESC;
